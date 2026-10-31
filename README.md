@@ -3,6 +3,8 @@
 **Student Name:** RAJAMONI NAVEEN  
 **Section:** CSE-2D  
 **Subject:** Database / Web Backend Lab  
+**GitHub Repository:** [https://github.com/naveenrajamoni89-lab/backend-lab-1](https://github.com/naveenrajamoni89-lab/backend-lab-1)  
+**Live Render Deployment:** [https://backend-lab-1-48n6.onrender.com](https://backend-lab-1-48n6.onrender.com)  
 
 ---
 
@@ -11,14 +13,29 @@
 This lab demonstrates how to build and structure HTTP servers in Node.js. It covers two foundational approaches:
 1. **Core Node.js HTTP Server (`basic-server.js`)**: Uses Node.js's built-in `http` module without any third-party frameworks.
 2. **Express.js Server (`server.js`)**: Implements a RESTful HTTP server using Express to handle routing, JSON responses, dynamic data generation, and custom 404 error handling.
+3. **Cloud Deployment (Render)**: Hosted live on Render web service with automated builds from GitHub.
 
 ---
 
-## 2. Directory Structure
+## 2. Live Deployment Endpoints
+
+The server is publicly accessible at: **`https://backend-lab-1-48n6.onrender.com`**
+
+| Endpoint | Method | Live URL | Description |
+| :--- | :---: | :--- | :--- |
+| **Welcome** | `GET` | [https://backend-lab-1-48n6.onrender.com/](https://backend-lab-1-48n6.onrender.com/) | Returns server welcome message |
+| **About** | `GET` | [https://backend-lab-1-48n6.onrender.com/about](https://backend-lab-1-48n6.onrender.com/about) | Returns student details in JSON |
+| **Time** | `GET` | [https://backend-lab-1-48n6.onrender.com/time](https://backend-lab-1-48n6.onrender.com/time) | Returns dynamic server date and time |
+| **404 Test** | `GET` | [https://backend-lab-1-48n6.onrender.com/unknown](https://backend-lab-1-48n6.onrender.com/unknown) | Catch-all handler for invalid routes |
+
+---
+
+## 3. Directory Structure
 
 ```text
 LAB-1/
 ├── node_modules/       # Installed dependencies
+├── .gitignore          # Git ignore file (excludes node_modules)
 ├── basic-server.js     # Native Node.js HTTP server (Requirement 2)
 ├── server.js           # Express.js server with all required endpoints (Requirements 3-8)
 ├── package.json        # Project metadata, scripts, and dependencies
@@ -28,7 +45,7 @@ LAB-1/
 
 ---
 
-## 3. Installation & Setup
+## 4. Installation & Local Setup
 
 ### Prerequisites
 - [Node.js](https://nodejs.org/) (v16 or higher)
@@ -38,12 +55,14 @@ LAB-1/
 Clone or navigate into the project directory and install the required dependencies:
 
 ```bash
+git clone https://github.com/naveenrajamoni89-lab/backend-lab-1.git
+cd backend-lab-1
 npm install
 ```
 
 ---
 
-## 4. Execution Commands
+## 5. Local Execution Commands
 
 ### A. Running the Express Server (Primary)
 To start the Express server on port `3000` (or `process.env.PORT`):
@@ -69,20 +88,20 @@ node basic-server.js
 
 ---
 
-## 5. API Endpoints Documentation (Express Server)
+## 6. API Endpoints Documentation
 
-| HTTP Method | Route | Description | Status Code | Example Response |
+| HTTP Method | Route | Description | Status Code | Example Response Body |
 | :--- | :--- | :--- | :---: | :--- |
 | **GET** | `/` | Welcome message | `200 OK` | `Welcome to the Express Server!` |
 | **GET** | `/about` | Student name and section | `200 OK` | `{"name":"RAJAMONI NAVEEN","section":"CSE-2D"}` |
-| **GET** | `/time` | Current server date & time | `200 OK` | `{"currentTime":"2026-10-31T07:43:01.098Z","formatted":"Sat Oct 31 2026 13:13:01 GMT+0530 (India Standard Time)"}` |
+| **GET** | `/time` | Current server date & time | `200 OK` | `{"currentTime":"2026-10-31T08:13:35.141Z","formatted":"Sat Oct 31 2026 08:13:35 GMT+0000 (Coordinated Universal Time)"}` |
 | **GET** | *Any Undefined Route* (e.g. `/unknown`) | Catch-all 404 handler | `404 Not Found` | `{"error":"Not Found","message":"Cannot GET /unknown"}` |
 
 ---
 
-## 6. Verification and Test Results
+## 7. Verification and Live Test Results
 
-The endpoints were tested using `curl` against a running server. The results below confirm the correct response bodies and HTTP status codes:
+The endpoints were tested on the live deployment via `curl`:
 
 ### Test 1: `GET /`
 ```http
@@ -105,7 +124,7 @@ Content-Type: application/json; charset=utf-8
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
 
-{"currentTime":"2026-10-31T07:43:01.098Z","formatted":"Sat Oct 31 2026 13:13:01 GMT+0530 (India Standard Time)"}
+{"currentTime":"2026-10-31T08:13:35.141Z","formatted":"Sat Oct 31 2026 08:13:35 GMT+0000 (Coordinated Universal Time)"}
 ```
 
 ### Test 4: `GET /unknown` (404 Fallback)
@@ -117,32 +136,32 @@ Content-Type: application/json; charset=utf-8
 ```
 
 > **Screenshot References:**  
-> When submitting the lab assignment, capture terminal or browser screenshots demonstrating:  
-> 1. Terminal running `npm start`.  
-> 2. Browser or Postman/curl output for `http://localhost:3000/`.  
-> 3. Browser or Postman/curl output for `http://localhost:3000/about`.  
-> 4. Browser or Postman/curl output for `http://localhost:3000/time`.  
-> 5. Browser or Postman/curl output for `http://localhost:3000/unknown` confirming the `404 Not Found` response.
+> When submitting the lab assignment, capture screenshots demonstrating:  
+> 1. Render Dashboard showing the web service deployed and active.  
+> 2. Browser output for `https://backend-lab-1-48n6.onrender.com/`.  
+> 3. Browser output for `https://backend-lab-1-48n6.onrender.com/about`.  
+> 4. Browser output for `https://backend-lab-1-48n6.onrender.com/time`.  
+> 5. Browser output for `https://backend-lab-1-48n6.onrender.com/unknown` verifying the `404 Not Found` status.
 
 ---
 
-## 7. Problems Encountered and Solutions
+## 8. Problems Encountered and Solutions
 
-1. **Port Conflicts**:
-   - *Problem:* Running multiple server instances or tests concurrently on port `3000` causes an `EADDRINUSE` error.
-   - *Solution:* Used dynamic port selection via `process.env.PORT || 3000` so tests can specify an alternate port without code modifications.
+1. **Dynamic Port Binding for Render Deployment**:
+   - *Problem:* Cloud platforms like Render assign a dynamic port via the `PORT` environment variable. Hardcoding `app.listen(3000)` causes health check timeouts and deployment failures.
+   - *Solution:* Used `const PORT = process.env.PORT || 3000;`, enabling seamless local testing on port 3000 and automatic adaptation to Render's environment.
 
 2. **404 Route Precedence in Express**:
    - *Problem:* Placing the catch-all middleware before defined routes causes all valid endpoints to return 404.
    - *Solution:* Registered the 404 middleware at the very bottom of the middleware stack, after all explicit `app.get(...)` routes have been evaluated.
 
-3. **Appropriate Content-Type Serialization**:
-   - *Problem:* Using `res.send()` with JavaScript objects works in Express, but explicit `res.json()` makes intention clearer and sets `Content-Type: application/json` reliably.
-   - *Solution:* Used `res.status(200).json(...)` for API endpoints and `res.status(200).send(...)` for plaintext welcome messages.
+3. **Standardized JSON Serialization**:
+   - *Problem:* While `res.send()` can stringify objects, `res.json()` explicitly sets the `Content-Type: application/json; charset=utf-8` header and formats JSON payloads correctly.
+   - *Solution:* Used `res.status(200).json(...)` for all structured endpoints.
 
 ---
 
-## 8. Viva Questions & Key Concepts
+## 9. Viva Questions & Key Concepts
 
 1. **What is the difference between Node's `http` module and Express?**
    - The `http` module is built into Node.js runtime and provides low-level streaming primitives. Express is a minimalist web framework built on top of `http` that provides intuitive routing, middleware pipelines, and helper methods (`res.json()`, `res.status()`).
@@ -150,6 +169,5 @@ Content-Type: application/json; charset=utf-8
 2. **Why does the 404 handler not require a path?**
    - In Express, `app.use((req, res) => { ... })` without a route path acts as a default middleware for all incoming requests. Placing it after all legitimate routes ensures it only executes if no previous route handler matched the incoming request.
 
-3. **How does `new Date()` work on the server?**
-   - `new Date()` captures the current system timestamp on the server machine at the exact moment the route handler runs. `toISOString()` formats this timestamp into the standard ISO 8601 UTC format.
-
+3. **Why is `process.env.PORT` required when deploying to Render / cloud hosts?**
+   - Cloud hosting providers use dynamic port binding and reverse proxies (e.g. Cloudflare, NGINX). Render injects the assigned listening port through the `PORT` environment variable. If the application does not listen on `process.env.PORT`, the reverse proxy cannot forward incoming traffic to the container.
